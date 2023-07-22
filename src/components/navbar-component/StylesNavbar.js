@@ -289,3 +289,20 @@ export const NavLogo = styled.img`
   cursor: pointer;
 `
 
+export const DropdownContent = styled.div`
+display: ${(props) => (props.isDropdownOpen ? "flex" : "none")};
+flex-direction: column;
+position: absolute;
+top: 80%;
+background: #4931;
+box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+border-radius: 10px;
+animation: ${neon} 20s linear infinite;
+z-index: 1;
+pointer-events: ${(props) => (props.isDropdownOpen ? "auto" : "none")}; /* Ajusta los eventos del contenido oculto */
+transition:  2s; /* Agrega una transición suave */
+
+& a{
+  margin: auto;
+}
+`;
