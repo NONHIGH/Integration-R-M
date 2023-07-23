@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Cards from "../card-component/Cards";
 import { filterCards, orderCards } from "../../redux/action";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { FavoriteContainer, FavoriteSelect, FavoriteTitle } from "./StylesFavorites";
 
 export default function Favorites() {
 
@@ -22,23 +21,18 @@ export default function Favorites() {
     dispatch(filterCards(event.target.value));
   };
 
-  useEffect(()=>{
-    console.log(myFavorites);
-    console.log('cambio el myFavorites');
-  },[myFavorites])
-
   return (
     <>
-      <h2>My Favorites</h2>
-      <div>
-        <select 
+      <FavoriteTitle>My Favorites</FavoriteTitle>
+      <FavoriteContainer>
+        <FavoriteSelect 
         name="Orders"
         onChange={handleOrder}
         >
           <option value="A">Ascendente</option>
           <option value="D">Descendente</option>
-        </select>
-        <select 
+        </FavoriteSelect>
+        <FavoriteSelect 
         name="Filters"
         onChange={handleFilter}
         >
@@ -47,13 +41,13 @@ export default function Favorites() {
           <option value="Female">Female</option>
           <option value="Genderless">Genderless</option>
           <option value="unknown">unknown</option>
-        </select>
+        </FavoriteSelect>
         {
           myFavorites&&
           <Cards characters={myFavorites}>{console.log(myFavorites)}</Cards>
           
         }
-      </div>
+      </FavoriteContainer>
     </>
   );
 }

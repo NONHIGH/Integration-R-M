@@ -17,8 +17,7 @@ export default function Detail(){
             })
     },[id])
 
-    
-    // console.log( character.origin.url );
+
 
     return (
         <>

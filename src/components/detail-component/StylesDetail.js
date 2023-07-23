@@ -11,7 +11,7 @@ export const DetailContainer = styled.article`
     align-items: center;
     position: absolute;
     top: 100px;
-    z-index: 1000;
+    z-index: -1;
 ` 
 
 export const DetailData = styled.h4`
@@ -21,5 +21,6 @@ export const DetailData = styled.h4`
 `
 
 export const DetailAvatar = styled.img`
+margin-top: auto;
     border-radius: 999px;
 `
