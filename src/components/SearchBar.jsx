@@ -12,11 +12,28 @@ import {
   DropdownContent
 } from "./navbar-component/StylesNavbar";
 import { Link, useNavigate } from "react-router-dom";
-// import styled, {keyframes} from 'styled-components'
-
+import styled from "styled-components";
 import Logo from "../img/logo.png";
 
-
+const DropdownContainer = styled.div`
+  &[data-isdropdownopen="true"] {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 80%;
+    left: 6%;
+    background: #4931;
+    z-index: 1;
+    pointer-events: auto;
+    transition: 2s;
+    & a {
+      margin: 0 auto;
+    }
+  }
+  &[data-isdropdownopen="false"]{
+    display: none;
+  }
+`
 
 export default function SearchBar(props) {
   const navigate = useNavigate();
@@ -52,7 +69,7 @@ export default function SearchBar(props) {
         onMouseLeave={toggleDropdownClose}
         style={{position:"relative", color:'#fff',}}
       > <NavButtonNavigation>Navigation</NavButtonNavigation>
-      <DropdownContent isDropdownOpen={isDropdownOpen}>
+      <DropdownContainer data-isdropdownopen={isDropdownOpen}>
             <Link to="/about">
               <NavButtonAbout>About</NavButtonAbout>
             </Link>
@@ -63,7 +80,7 @@ export default function SearchBar(props) {
               <NavButtonFavorites>favorites</NavButtonFavorites>
             </Link>
         
-      </DropdownContent>
+      </DropdownContainer>
       </div>
       <NavButtonLogOut onClick={logOut}>Log out</NavButtonLogOut>
       <div>

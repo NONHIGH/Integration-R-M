@@ -7,7 +7,7 @@ export default function Cards(props) {
    
    const {characters} = props;
    
-   characters.onClose = ()=>{ window.alert('Emulamos que se cierra la card') }
+  
    return (
       
          <CardsStyles>

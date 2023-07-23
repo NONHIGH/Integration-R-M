@@ -1,35 +1,31 @@
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cards from "../card-component/Cards";
 import { filterCards, orderCards } from "../../redux/action";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-function Favorites({ myFavorites }) {
+export default function Favorites() {
 
-  const [aux, setAux] = useState(false);
   
-  const allCharacters = useSelector((state)=>state.allCharacters);
-  const locacion = useLocation()
-  useEffect(()=>{
-    if(!myFavorites && locacion==='/favorite'){
-      myFavorites = allCharacters
-    }
-  },[])
-  
+  const myFavorites = useSelector((state)=>state.myFavorites)
+  console.log(myFavorites);
 
   const dispatch = useDispatch();
 
-
-
   const handleOrder = (event) => {
+    console.log(event.target.value);
     dispatch(orderCards(event.target.value));
-    setAux(!aux)
   };
 
   const handleFilter = (event) => {
-    
+    console.log(event.target.value);
     dispatch(filterCards(event.target.value));
   };
+
+  useEffect(()=>{
+    console.log(myFavorites);
+    console.log('cambio el myFavorites');
+  },[myFavorites])
 
   return (
     <>
@@ -53,20 +49,13 @@ function Favorites({ myFavorites }) {
           <option value="unknown">unknown</option>
         </select>
         {
-          myFavorites?
-          <Cards characters={myFavorites}></Cards>
-          :
-          <Cards characters={allCharacters}></Cards>
+          myFavorites&&
+          <Cards characters={myFavorites}>{console.log(myFavorites)}</Cards>
+          
         }
       </div>
     </>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    myFavorites: state.myFavorites,
-  };
-};
 
-export default connect(mapStateToProps, null)(Favorites);

@@ -1,6 +1,5 @@
 import "./App.css";
 import Cards from "./components/card-component/Cards.jsx";
-import "./layout/footerApp.css";
 import StarBackground from "./components/background";
 import NavBar from "./components/navbar-component/NavBar";
 import { useEffect, useState } from "react";
