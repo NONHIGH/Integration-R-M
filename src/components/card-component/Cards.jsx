@@ -17,7 +17,7 @@ export default function Cards(props) {
                   <Card
                   key={element.id} 
                   {...element}
-                  
+                  onClose={props.onClose}
                   ></Card>
               )
             })}
