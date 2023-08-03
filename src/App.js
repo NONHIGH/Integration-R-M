@@ -15,69 +15,105 @@ function App() {
 
   const navigate = useNavigate();
   const [access, setAccess] = useState(false);
-  const EMAIL = 'angelones1_25@gmail.com'
-  const PASSWORD = 'Carade12'
 
   const userKey = 'drownSpeedMagic';
 
-  function login(userData){
-    if(userData.password === PASSWORD && userData.email === EMAIL){
+  // function login(userData){
+  //   if(userData.password === PASSWORD && userData.email === EMAIL){
+  //     localStorage.setItem('userKey', userKey)
+  //     setAccess(true);
+  //     navigate('/home');
+  //   }
+  //   else{
+  //     alert('usuario o contrase;a incorrecto')
+  //   }
+  // }
+  //   function login(userData) {
+  //     const { email, password } = userData;
+  //     const URL = 'http://localhost:3001/rickandmorty/login/';
+  //     axios(URL + ).then(({ data }) => {
+  //        const { access } = data;
+  //        localStorage.setItem('userKey', userKey)
+  //        setAccess(data);
+  //        access && navigate('/home');
+  //     });
+  //  }
+
+  async function login(userData) {
+    try {
+      const { email, password } = userData;
+      const URL = 'http://localhost:3001/rickandmorty/login/';
+      const query = `?email=${email}&password=${password}`;
+      const { data } = await axios(URL + query);
+      const { access } = data;
+      setAccess(data);
       localStorage.setItem('userKey', userKey)
-      setAccess(true);
-      navigate('/home');
-    }
-    else{
-      alert('usuario o contrase;a incorrecto')
+      access && navigate('/home');
+    } catch (error) {
+      return { error: error.message };
     }
   }
 
-  useEffect(()=>{
+
+  useEffect(() => {
     !access && navigate('/');
-  },[access])
+  }, [access])
 
 
 
   const keyOfUser = localStorage.getItem("userKey");
 
-  const classBody = "BodyImage";
+  const classBody = ["BodyImage", "AboutImage"];
   const location = useLocation();
   const [inLogin, setInLogin] = useState(true);
   useEffect(() => {
     if (location.pathname === "/" || location.pathname === "") {
-      document.body.classList.add(classBody);
+      document.body.classList.add(classBody[0]);
       setInLogin(true);
     } else {
-      document.body.classList.remove(classBody);
+      document.body.classList.remove(classBody[0]);
       setInLogin(false);
+    }
+    if (location.pathname === '/about') {
+      document.body.classList.add(classBody[1])
+
+    } else {
+      document.body.classList.remove(classBody[1])
+
     }
 
     return () => {
-      document.body.classList.remove(classBody);
+      document.body.classList.remove(classBody[0]);
+      document.body.classList.remove(classBody[1]);
       setInLogin(false);
     };
   }, [location.pathname, inLogin]);
 
   const [characters, setCharacters] = useState([]);
 
-  function onSearch(id) {
-    const existinting = characters.find(
-      (character) => character.id === Number(id)
-    );
+  async function onSearch(id) {
+    try {
+      const endpoint = `http://localhost:3001/rickandmorty/character/${id}`;
+      const { data } = await axios(endpoint);
 
-    if (existinting) {
-      alert("Este texto ");
-      return;
-    }
-    axios(`https://rickandmortyapi.com/api/character/${id}`).then(
-      ({ data }) => {
-        if (data.name) {
-          setCharacters((anteriores) => [...anteriores, data]);
-        } else {
-          window.alert("¡No existe este id de personaje!");
-        }
+      const characterFind = characters.find(char => char.id === Number(id));
+      if (characterFind) {
+        alert('Already in the list')
       }
-    );
+      else if (data.id !== undefined) {
+        setCharacters((character) => [...character, data])
+      }
+
+    } catch (error) {
+      return { error: error.message }
+    }
+
+    // .catch((error) => {
+    //   alert("Hubo un error al buscar al personaje");
+    //   console.log(error);
+    // });
   }
+
 
   function onClose(id) {
     setCharacters(
@@ -93,58 +129,58 @@ function App() {
 
       <Routes>
 
-      {!keyOfUser ? (
-        
-        <Route path="/" element={<Form login={login}></Form>} />
-        
-        ):(
-          <>
-          <Route
-          path="/home"
-          element={
-            <>
-              <Cards characters={characters} onClose={onClose}>
-                {" "}
-              </Cards>{" "}
-              <StarBackground />
-            </>
-          }
-        />
+        {!keyOfUser ? (
 
-        <Route 
-        path="/favorite"
-        element={
+          <Route path="/" element={<Form login={login}></Form>} />
+
+        ) : (
           <>
-          <Favorites/> <StarBackground />
+            <Route
+              path="/home"
+              element={
+                <>
+                  <Cards characters={characters} onClose={onClose}>
+                    {" "}
+                  </Cards>{" "}
+                  <StarBackground />
+                </>
+              }
+            />
+
+            <Route
+              path="/favorite"
+              element={
+                <>
+                  <Favorites /> <StarBackground />
+                </>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <>
+                  <About></About>{" "}
+                </>
+              }
+            />
+
+
+            <Route
+              path="/detail/:id"
+              element={
+                <>
+                  <Detail></Detail> <StarBackground />
+                </>
+              }
+            />
+
+            <Route path="*" element={<Navigate to={"/home"}></Navigate>} />
           </>
-        }
-        />
-        <Route
-        path="/about"
-        element={
-          <>
-              <About></About>{" "}
-            </>
-          }
-          />
+
+        )}
 
 
-        <Route
-          path="/detail/:id"
-          element={
-            <>
-              <Detail></Detail> <StarBackground />
-            </>
-          }
-          />
 
-        <Route path="*" element={<Navigate to={"/home"}></Navigate>} />
-        </>
-          
-          )}
-        
-        
-        
       </Routes>
     </div>
   );

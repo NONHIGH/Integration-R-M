@@ -24,6 +24,9 @@ body {
     background-image: url('https://i.pinimg.com/236x/ac/26/08/ac260885519d2452a6433a2b4d151c51.jpg');
   }
 }
+.AboutImage{
+  background-image: url('./img/about.jpg');
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

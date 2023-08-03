@@ -7,7 +7,7 @@ export default function Favorites() {
 
   
   const myFavorites = useSelector((state)=>state.myFavorites)
-  console.log(myFavorites);
+  
 
   const dispatch = useDispatch();
 

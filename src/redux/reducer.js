@@ -9,18 +9,16 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
       case ADD_FAVORITES:
         console.log('se agrego ->', action.payload);
-        return {
-          ...state,
-          allCharacters: [...state.allCharacters, action.payload],
-          myFavorites: [...state.myFavorites, action.payload],
-        };
+        // return {
+        //   ...state,
+        //   allCharacters: [...state.allCharacters, action.payload],
+        //   myFavorites: [...state.myFavorites, action.payload],
+        // };
+        return { ...state, myFavorites: action.payload, allCharacters: action.payload };
       case DELETE_FAVORITE:
         console.log('se elimino el id ->', action.payload);
-        return {
-          ...state,
-          allCharacters: [...state.allCharacters].filter(char => char.id !== action.payload),
-          myFavorites: state.myFavorites.filter(char => char.id !== action.payload)
-        };
+        console.log(action.payload);
+        return { ...state, myFavorites: action.payload, allCharacters: action.payload };
       case FILTER:
         if (action.payload === 'All') {
           return {
