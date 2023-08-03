@@ -8,8 +8,7 @@ import {
   NavButtonLogOut,
   NavLogo,
   NavButtonFavorites,
-  NavButtonNavigation,
-  DropdownContent
+  NavButtonNavigation
 } from "./navbar-component/StylesNavbar";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";

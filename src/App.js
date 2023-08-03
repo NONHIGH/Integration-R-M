@@ -57,12 +57,13 @@ function App() {
 
   useEffect(() => {
     !access && navigate('/');
-  }, [access])
+  }, [access, navigate])
 
 
 
   const keyOfUser = localStorage.getItem("userKey");
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const classBody = ["BodyImage", "AboutImage"];
   const location = useLocation();
   const [inLogin, setInLogin] = useState(true);
@@ -87,7 +88,7 @@ function App() {
       document.body.classList.remove(classBody[1]);
       setInLogin(false);
     };
-  }, [location.pathname, inLogin]);
+  }, [location.pathname, inLogin, classBody]);
 
   const [characters, setCharacters] = useState([]);
 
@@ -107,11 +108,6 @@ function App() {
     } catch (error) {
       return { error: error.message }
     }
-
-    // .catch((error) => {
-    //   alert("Hubo un error al buscar al personaje");
-    //   console.log(error);
-    // });
   }
 
 

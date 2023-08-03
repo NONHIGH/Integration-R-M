@@ -13,7 +13,7 @@ export default function Detail(){
                         setCharacter(data)
             })
             .catch((error)=>{
-                console.log(error);
+                alert(error.message)
             })
     },[id])
 
